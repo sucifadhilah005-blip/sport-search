@@ -49,6 +49,18 @@ body {
     margin: 30px auto;
 }
 
+/* BACK BUTTON */
+.back-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 8px 15px;
+    background: #2a5298;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+/* INFO */
 .result-info {
     margin-bottom: 20px;
     color: #555;
@@ -93,29 +105,38 @@ body {
 
 <body>
 
+<!-- NAVBAR -->
 <div class="navbar">
     <div class="navbar-title">SportSearch</div>
 
     <form action="/search" method="post" class="search-bar">
-        <input type="text" name="query" placeholder="Cari lagi...">
+        <input type="text" name="query" value="{{ query }}" placeholder="Cari lagi...">
         <button type="submit">Cari</button>
     </form>
 </div>
 
 <div class="container">
 
-<div class="result-info">
-    Hasil untuk: <b>{{ query }}</b>
-</div>
+    <!-- TOMBOL KEMBALI -->
+    <a href="/" class="back-btn">← Kembali ke Halaman Awal</a>
 
-{% for r in results %}
-<div class="card">
-    <h3>{{ r.title }}</h3>
-    <p>{{ r.content }}...</p>
-    <a href="{{ r.url }}" target="_blank">Baca selengkapnya</a>
-    <div class="score">Score: {{ r.score }}</div>
-</div>
-{% endfor %}
+    <div class="result-info">
+        Hasil untuk: <b>{{ query }}</b>
+    </div>
+
+    <!-- HASIL -->
+    {% if results %}
+        {% for r in results %}
+        <div class="card">
+            <h3>{{ r.title }}</h3>
+            <p>{{ r.content }}...</p>
+            <a href="{{ r.url }}" target="_blank">Baca selengkapnya</a>
+            <div class="score">Score: {{ r.score }}</div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Tidak ada hasil ditemukan.</p>
+    {% endif %}
 
 </div>
 
