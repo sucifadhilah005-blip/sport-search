@@ -1,123 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Hasil Pencarian</title>
+    <title>Hasil Pencarian</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
 
-<style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #f4f6f9;
-}
+        .result {
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+        }
 
-/* NAVBAR */
-.navbar {
-    background: #1e3c72;
-    padding: 15px 40px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
 
-.navbar-title {
-    font-size: 20px;
-    font-weight: bold;
-}
-
-/* SEARCH BAR TOP */
-.search-bar input {
-    padding: 8px;
-    border-radius: 20px;
-    border: none;
-    width: 250px;
-}
-
-.search-bar button {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 20px;
-    background: #2a5298;
-    color: white;
-    cursor: pointer;
-}
-
-/* CONTENT */
-.container {
-    max-width: 800px;
-    margin: 30px auto;
-}
-
-.result-info {
-    margin-bottom: 20px;
-    color: #555;
-}
-
-/* CARD */
-.card {
-    background: white;
-    border-radius: 12px;
-    padding: 18px;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-4px);
-}
-
-.card h3 {
-    margin: 0;
-    color: #1e3c72;
-}
-
-.card p {
-    color: #555;
-}
-
-.card a {
-    text-decoration: none;
-    color: #2a5298;
-    font-weight: bold;
-}
-
-.score {
-    font-size: 12px;
-    color: gray;
-    margin-top: 5px;
-}
-</style>
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="navbar">
-    <div class="navbar-title">SportSearch</div>
+    <!-- TOMBOL KEMBALI -->
+    <a href="/" class="back-btn">← Kembali ke Halaman Awal</a>
 
-    <form action="/search" method="post" class="search-bar">
-        <input type="text" name="query" placeholder="Cari lagi...">
-        <button type="submit">Cari</button>
-    </form>
-</div>
+    <h2>Hasil pencarian untuk: "{{ query }}"</h2>
 
-<div class="container">
-
-<div class="result-info">
-    Hasil untuk: <b>{{ query }}</b>
-</div>
-
-{% for r in results %}
-<div class="card">
-    <h3>{{ r.title }}</h3>
-    <p>{{ r.content }}...</p>
-    <a href="{{ r.url }}" target="_blank">Baca selengkapnya</a>
-    <div class="score">Score: {{ r.score }}</div>
-</div>
-{% endfor %}
-
-</div>
+    {% if results %}
+        {% for r in results %}
+        <div class="result">
+            <h3>{{ r.title }}</h3>
+            <p>{{ r.content }}</p>
+            <a href="{{ r.url }}" target="_blank">Baca Selengkapnya</a>
+            <p><b>Score:</b> {{ r.score }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Tidak ada hasil ditemukan.</p>
+    {% endif %}
 
 </body>
 </html>
