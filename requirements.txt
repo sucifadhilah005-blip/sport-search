@@ -1,7 +1,16 @@
+<<<<<<< HEAD
 flask
 pandas
 scikit-learn
 sastrawi
 beautifulsoup4
 cloudscraper
+=======
+flask
+pandas
+scikit-learn
+sastrawi
+beautifulsoup4
+cloudscraper
+>>>>>>> c6d4d0ccccecc82aaba4307ae9c5bb84e08b0006
 tqdm
