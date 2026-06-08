@@ -1,16 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Sport Search</title>
+<meta charset="UTF-8">
+<title>SportSearch</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f9;
+}
+
+/* NAVBAR */
+.navbar {
+    background: #1e3c72;
+    padding: 15px 40px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* CENTER */
+.container {
+    text-align: center;
+    margin-top: 120px;
+}
+
+.logo {
+    font-size: 42px;
+    font-weight: bold;
+    color: #1e3c72;
+}
+
+.logo span {
+    color: #2a5298;
+}
+
+/* SEARCH BOX */
+.search-box {
+    margin-top: 30px;
+}
+
+.search-box input {
+    width: 400px;
+    padding: 14px;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.search-box input:focus {
+    border-color: #2a5298;
+    box-shadow: 0 0 5px rgba(42,82,152,0.5);
+}
+
+.search-box button {
+    margin-left: 10px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    background: #1e3c72;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.search-box button:hover {
+    background: #2a5298;
+}
+</style>
 </head>
+
 <body>
 
-    <h1>Sport Search</h1>
+<div class="navbar">
+    SportSearch
+</div>
 
-    <form action="/search" method="post">
-        <input type="text" name="query" placeholder="Masukkan kata kunci..." required>
+<div class="container">
+    <div class="logo">Sport<span>Search</span></div>
+
+    <form action="/search" method="post" class="search-box">
+        <input type="text" name="query" placeholder="Cari berita olahraga..." required>
         <button type="submit">Cari</button>
     </form>
+</div>
 
 </body>
 </html>
