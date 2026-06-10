@@ -26,7 +26,7 @@ body {
     font-weight: bold;
 }
 
-/* SEARCH BAR TOP */
+/* SEARCH BAR */
 .search-bar input {
     padding: 8px;
     border-radius: 20px;
@@ -45,25 +45,15 @@ body {
 
 /* CONTENT */
 .container {
-    max-width: 800px;
+    max-width: 850px;
     margin: 30px auto;
-}
-
-/* BACK BUTTON */
-.back-btn {
-    display: inline-block;
-    margin-bottom: 20px;
-    padding: 8px 15px;
-    background: #2a5298;
-    color: white;
-    border-radius: 8px;
-    text-decoration: none;
 }
 
 /* INFO */
 .result-info {
     margin-bottom: 20px;
     color: #555;
+    font-size: 15px;
 }
 
 /* CARD */
@@ -81,12 +71,13 @@ body {
 }
 
 .card h3 {
-    margin: 0;
+    margin: 0 0 10px;
     color: #1e3c72;
 }
 
 .card p {
     color: #555;
+    line-height: 1.5;
 }
 
 .card a {
@@ -98,18 +89,66 @@ body {
 .score {
     font-size: 12px;
     color: gray;
-    margin-top: 5px;
+    margin-top: 8px;
+}
+
+/* PAGINATION */
+.pagination {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 8px 14px;
+    margin: 0 3px;
+    background: white;
+    color: #1e3c72;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.pagination a:hover {
+    background: #2a5298;
+    color: white;
+}
+
+.pagination .active {
+    background: #1e3c72;
+    color: white;
+}
+
+/* BACK BUTTON */
+.back-btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 10px 18px;
+    background: #2a5298;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.back-btn:hover {
+    background: #1e3c72;
 }
 </style>
-</head>
 
+</head>
 <body>
+
 <!-- NAVBAR -->
 <div class="navbar">
     <div class="navbar-title">SportSearch</div>
 
     <form action="/search" method="post" class="search-bar">
-        <input type="text" name="query" value="{{ query }}" placeholder="Cari lagi...">
+        <input type="text"
+               name="query"
+               value="{{ query }}"
+               placeholder="Cari lagi..."
+               required>
+
         <button type="submit">Cari</button>
     </form>
 </div>
@@ -117,25 +156,62 @@ body {
 <div class="container">
 
     <div class="result-info">
-        Hasil untuk: <b>{{ query }}</b>
+        Hasil untuk:
+        <b>{{ query }}</b>
+        <br>
+        Total ditemukan:
+        <b>{{ total_results }}</b> berita
     </div>
 
-    <!-- HASIL -->
     {% if results %}
+
         {% for r in results %}
         <div class="card">
             <h3>{{ r.title }}</h3>
+
             <p>{{ r.content }}...</p>
-            <a href="{{ r.url }}" target="_blank">Baca selengkapnya</a>
-            <div class="score">Score: {{ r.score }}</div>
+
+            <a href="{{ r.url }}" target="_blank">
+                Baca selengkapnya
+            </a>
+
+            <div class="score">
+                Score: {{ r.score }}
+            </div>
         </div>
         {% endfor %}
+
+        <!-- PAGINATION -->
+        <div class="pagination">
+
+            {% if current_page > 1 %}
+            <a href="/search?query={{ query }}&page={{ current_page - 1 }}">
+                ← Prev
+            </a>
+            {% endif %}
+
+            {% for p in range(1, total_pages + 1) %}
+                <a href="/search?query={{ query }}&page={{ p }}"
+                   class="{% if p == current_page %}active{% endif %}">
+                   {{ p }}
+                </a>
+            {% endfor %}
+
+            {% if current_page < total_pages %}
+            <a href="/search?query={{ query }}&page={{ current_page + 1 }}">
+                Next →
+            </a>
+            {% endif %}
+
+        </div>
+
     {% else %}
         <p>Tidak ada hasil ditemukan.</p>
     {% endif %}
 
-    <!-- TOMBOL KEMBALI -->
-    <a href="/" class="back-btn">Kembali ke Halaman Awal</a>
+    <a href="/" class="back-btn">
+        Kembali ke Halaman Awal
+    </a>
 
 </div>
 

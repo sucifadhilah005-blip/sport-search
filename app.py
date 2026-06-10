@@ -213,17 +213,39 @@ def search(query):
 def index():
     return render_template('index.html')
 
-@app.route('/search', methods=['POST'])
+@app.route('/search', methods=['GET', 'POST'])
 def result():
 
-    query = request.form.get('query', '')
+    if request.method == 'POST':
+        query = request.form.get('query', '')
+        page = 1
+    else:
+        query = request.args.get('query', '')
+        page = int(request.args.get('page', 1))
 
     results = search(query)
+
+    per_page = 5
+
+    total_results = len(results)
+
+    total_pages = (
+        total_results + per_page - 1
+    ) // per_page
+
+    start = (page - 1) * per_page
+
+    end = start + per_page
+
+    paginated_results = results[start:end]
 
     return render_template(
         'result.html',
         query=query,
-        results=results
+        results=paginated_results,
+        current_page=page,
+        total_pages=total_pages,
+        total_results=total_results
     )
 
 # =========================
