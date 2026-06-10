@@ -33,6 +33,7 @@ df = pd.read_csv(
     os.path.join(BASE_DIR, "processed_paper.csv")
 )
 
+print("Jumlah data:", len(df))
 # =========================
 # NLP TOOLS
 # =========================
