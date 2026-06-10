@@ -33,7 +33,6 @@ df = pd.read_csv(
     os.path.join(BASE_DIR, "processed_paper.csv")
 )
 
-print("Jumlah data:", len(df))
 # =========================
 # NLP TOOLS
 # =========================
@@ -96,7 +95,6 @@ def search(query):
                 [word]
             )
 
-    # semua kombinasi sinonim
     expanded_queries = []
 
     for combo in itertools.product(*synonym_lists):
@@ -158,29 +156,19 @@ def search(query):
 
     )
 
-    unique_doc = set()
-
-    ranked_results = []
-
-    for item in all_results:
-
-        if item[0] not in unique_doc:
-
-            unique_doc.add(item[0])
-
-            ranked_results.append(item)
-
     # ----------------------
-    # THRESHOLD
+    # TANPA DEDUPLIKASI
+    # AGAR JUMLAH HASIL
+    # SAMA DENGAN NOTEBOOK
     # ----------------------
 
-    SIMILARITY_THRESHOLD = 0.05
+    SIMILARITY_THRESHOLD = 0
 
     filtered_results = [
 
         item
 
-        for item in ranked_results[1:]
+        for item in all_results[1:]
 
         if item[1] >= SIMILARITY_THRESHOLD
 
